@@ -318,7 +318,7 @@ public:
    * @param cardCS CS pin for the SD card on the SPI bus
    */
   Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs, int8_t dcs, int8_t dreq,
-                             int8_t cardCS);
+                             int8_t cardCS, const char *loop1_name, const char *loop2_name);
 
   /*!
    * @brief Hardware SPI constructor. Uses Hardware SPI and assumes the default
@@ -342,6 +342,8 @@ public:
    * @return Returs true/false for success/failure
    */
   boolean useInterrupt(uint8_t type);
+  File loop1;
+  File loop2;
   File currentTrack;             //!< File that is currently playing
   volatile boolean playingMusic; //!< Whether or not music is playing
   /*!

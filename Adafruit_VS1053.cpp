@@ -98,12 +98,16 @@ boolean Adafruit_VS1053_FilePlayer::useInterrupt(uint8_t type) {
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs,
                                                        int8_t dcs, int8_t dreq,
-                                                       int8_t cardcs)
+                                                       int8_t cardcs,
+                                                       const char *loop1_name,
+                                                       const char *loop2_name)
     : Adafruit_VS1053(rst, cs, dcs, dreq) {
 
   playingMusic = false;
   _cardCS = cardcs;
   _loopPlayback = false;
+  loop1 = SD.open(loop1_name);
+  loop1 = SD.open(loop2_name);
 }
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t cs, int8_t dcs,
