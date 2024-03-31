@@ -299,12 +299,12 @@ void Adafruit_VS1053_FilePlayer::feedBuffer(void) {
   feedBufferLock = false;
 }
 
-void Adafruit_VS1053_FilePlayer::rewind_file(File *f)
+void Adafruit_VS1053_FilePlayer::rewind_file(File f)
 {
-  if (isMP3File(f->name())) {
-    f->seek(mp3_ID3Jumper(currentTrack));
+  if (isMP3File(f.name())) {
+    f.seek(mp3_ID3Jumper(f));
   } else {
-    f->seek(0);
+    f.seek(0);
   }
 }
 
@@ -323,7 +323,7 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
 
       if (bytesread == 0) {
         if (_loopPlayback) {
-          rewind_file(&currentTrack);
+          rewind_file(currentTrack);
         } else {
           playingMusic = false;
           currentTrack.close();
@@ -347,10 +347,10 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
       if (bytesread == 0) {
         switch (_loop) {
           case 1:
-            rewind_file(&loop1);
+            rewind_file(loop1);
             break;
           case 2:
-            rewind_file(&loop2);
+            rewind_file(loop2);
             break;
           default:
             return;
