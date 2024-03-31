@@ -104,6 +104,7 @@ Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs,
   playingMusic = false;
   _cardCS = cardcs;
   _loopPlayback = false;
+  _loop = 0;
 }
 
 void Adafruit_VS1053_FilePlayer::set_loop_file_names(const char *loop1_name,
@@ -111,6 +112,11 @@ void Adafruit_VS1053_FilePlayer::set_loop_file_names(const char *loop1_name,
 {
   loop1 = SD.open(loop1_name);
   loop2 = SD.open(loop2_name);
+}
+
+void Adafruit_VS1053_FilePlayer::set_loop(uint8_t loop)
+{
+  _loop = loop;
 }
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t cs, int8_t dcs,
@@ -121,6 +127,8 @@ Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t cs, int8_t dcs,
   playingMusic = false;
   _cardCS = cardcs;
   _loopPlayback = false;
+  _loop = 0;
+}
 }
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t mosi, int8_t miso,
@@ -133,6 +141,8 @@ Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t mosi, int8_t miso,
   playingMusic = false;
   _cardCS = cardcs;
   _loopPlayback = false;
+  _loop = 0;
+}
 }
 
 boolean Adafruit_VS1053_FilePlayer::begin(void) {

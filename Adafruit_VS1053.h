@@ -320,11 +320,7 @@ public:
   Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs, int8_t dcs, int8_t dreq,
                              int8_t cardCS);
 
-  void set_loop(uint8_t loop)
-  {
-    _loop = loop;
-  }
-
+  void set_loop(uint8_t loop);
   void set_loop_file_names(const char *loop1_name, const char *loop2_name);
 
   /*!
