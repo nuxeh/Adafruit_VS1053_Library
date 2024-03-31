@@ -309,7 +309,7 @@ void Adafruit_VS1053_FilePlayer::rewind_file(File f)
 }
 
 void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
-  if ((!currentTrack) || (!readyForData())) {
+  if (!readyForData()) {
     return; // paused or stopped
   }
 
@@ -319,6 +319,10 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
 
     // playing a sample
     if (playingMusic) {
+      if (!currentTrack) {
+        return;
+      }
+
       bytesread = currentTrack.read(mp3buffer, VS1053_DATABUFFERLEN);
 
       if (bytesread == 0) {
@@ -331,7 +335,7 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
         }
       }
     } else {
-      // play current loop
+      // play current background loop
       switch (_loop) {
         case 1:
           bytesread = loop1.read(mp3buffer, VS1053_DATABUFFERLEN);
