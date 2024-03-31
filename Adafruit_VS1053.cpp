@@ -106,8 +106,13 @@ Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs,
   playingMusic = false;
   _cardCS = cardcs;
   _loopPlayback = false;
+}
+
+void Adafruit_VS1053_FilePlayer::set_loop_file_names(const char *loop1_name,
+                                                     const char *loop2_name)
+{
   loop1 = SD.open(loop1_name);
-  loop1 = SD.open(loop2_name);
+  loop2 = SD.open(loop2_name);
 }
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t cs, int8_t dcs,
@@ -338,9 +343,11 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
       // play current background loop
       switch (_loop) {
         case 1:
+          if (!loop1) { return; }
           bytesread = loop1.read(mp3buffer, VS1053_DATABUFFERLEN);
           break;
         case 2:
+          if (!loop2) { return; }
           bytesread = loop2.read(mp3buffer, VS1053_DATABUFFERLEN);
           break;
         default:
