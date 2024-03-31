@@ -423,7 +423,7 @@ public:
 
 private:
   void feedBuffer_noLock(void);
-  void rewind_file(File *f);
+  void rewind_file(File f);
 
   uint8_t _cardCS;
   uint8_t _loop = 0;
