@@ -424,7 +424,7 @@ private:
   void rewind_file(File f);
 
   uint8_t _cardCS;
-  uint8_t _loop = 0;
+  uint8_t _loop;
 };
 
 #endif // ADAFRUIT_VS1053_H
