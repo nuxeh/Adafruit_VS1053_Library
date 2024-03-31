@@ -129,7 +129,6 @@ Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t cs, int8_t dcs,
   _loopPlayback = false;
   _loop = 0;
 }
-}
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t mosi, int8_t miso,
                                                        int8_t clk, int8_t rst,
@@ -142,7 +141,6 @@ Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t mosi, int8_t miso,
   _cardCS = cardcs;
   _loopPlayback = false;
   _loop = 0;
-}
 }
 
 boolean Adafruit_VS1053_FilePlayer::begin(void) {
