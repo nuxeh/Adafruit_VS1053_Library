@@ -335,7 +335,7 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
       switch (_loop) {
         case 1:
           bytesread = loop1.read(mp3buffer, VS1053_DATABUFFERLEN);
-          break
+          break;
         case 2:
           bytesread = loop2.read(mp3buffer, VS1053_DATABUFFERLEN);
           break;
@@ -348,7 +348,7 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
         switch (_loop) {
           case 1:
             rewind_file(&loop1);
-            break
+            break;
           case 2:
             rewind_file(&loop2);
             break;
