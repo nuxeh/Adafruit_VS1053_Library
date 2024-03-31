@@ -347,6 +347,7 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
       }
     } else {
       // play current background loop
+      Serial.println(_loop);
       switch (_loop) {
         case 1:
           if (!loop1) { return; }
@@ -362,7 +363,6 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
 
       // rewind loop if run out
       if (bytesread == 0) {
-        Serial.println(_loop);
         switch (_loop) {
           case 1:
             rewind_file(loop1);
