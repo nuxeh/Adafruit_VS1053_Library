@@ -299,7 +299,7 @@ void Adafruit_VS1053_FilePlayer::feedBuffer(void) {
   feedBufferLock = false;
 }
 
-void rewind_file(File *f)
+void Adafruit_VS1053_FilePlayer::rewind_file(File *f)
 {
   if (isMP3File(f->name())) {
     f->seek(mp3_ID3Jumper(currentTrack));
