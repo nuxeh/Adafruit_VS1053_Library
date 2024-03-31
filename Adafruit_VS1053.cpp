@@ -299,31 +299,62 @@ void Adafruit_VS1053_FilePlayer::feedBuffer(void) {
   feedBufferLock = false;
 }
 
+void rewind_file(File *f)
+{
+  if (isMP3File(f->name())) {
+    f->seek(mp3_ID3Jumper(currentTrack));
+  } else {
+    f->seek(0);
+  }
+}
+
 void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
-  if ((!playingMusic) // paused or stopped
-      || (!currentTrack) || (!readyForData())) {
+  if ((!currentTrack) || (!readyForData())) {
     return; // paused or stopped
   }
 
   // Feed the hungry buffer! :)
   while (readyForData()) {
-    // Read some audio data from the SD card file
-    int bytesread = currentTrack.read(mp3buffer, VS1053_DATABUFFERLEN);
+    int bytesread = 0;
 
-    if (bytesread == 0) {
-      // must be at the end of the file
-      if (_loopPlayback) {
-        // play in loop
-        if (isMP3File(currentTrack.name())) {
-          currentTrack.seek(mp3_ID3Jumper(currentTrack));
+    // playing a sample
+    if (playingMusic) {
+      bytesread = currentTrack.read(mp3buffer, VS1053_DATABUFFERLEN);
+
+      if (bytesread == 0) {
+        if (_loopPlayback) {
+          rewind_file(&currentTrack);
         } else {
-          currentTrack.seek(0);
+          playingMusic = false;
+          currentTrack.close();
+          break;
         }
-      } else {
-        // wrap it up!
-        playingMusic = false;
-        currentTrack.close();
-        break;
+      }
+    } else {
+      // play current loop
+      switch (_loop) {
+        case 1:
+          bytesread = loop1.read(mp3buffer, VS1053_DATABUFFERLEN);
+          break
+        case 2:
+          bytesread = loop2.read(mp3buffer, VS1053_DATABUFFERLEN);
+          break;
+        default:
+          return;
+      }
+
+      // rewind loop if run out
+      if (bytesread == 0) {
+        switch (_loop) {
+          case 1:
+            rewind_file(&loop1);
+            break
+          case 2:
+            rewind_file(&loop2);
+            break;
+          default:
+            return;
+        }
       }
     }
 

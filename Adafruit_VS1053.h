@@ -320,6 +320,11 @@ public:
   Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs, int8_t dcs, int8_t dreq,
                              int8_t cardCS, const char *loop1_name, const char *loop2_name);
 
+  void set_loop(uint8_t loop)
+  {
+    _loop = loop;
+  }
+
   /*!
    * @brief Hardware SPI constructor. Uses Hardware SPI and assumes the default
    * SPI pins
@@ -420,6 +425,7 @@ private:
   void feedBuffer_noLock(void);
 
   uint8_t _cardCS;
+  uint8_t _loop = 0;
 };
 
 #endif // ADAFRUIT_VS1053_H
