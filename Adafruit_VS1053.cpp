@@ -98,9 +98,7 @@ boolean Adafruit_VS1053_FilePlayer::useInterrupt(uint8_t type) {
 
 Adafruit_VS1053_FilePlayer::Adafruit_VS1053_FilePlayer(int8_t rst, int8_t cs,
                                                        int8_t dcs, int8_t dreq,
-                                                       int8_t cardcs,
-                                                       const char *loop1_name,
-                                                       const char *loop2_name)
+                                                       int8_t cardcs)
     : Adafruit_VS1053(rst, cs, dcs, dreq) {
 
   playingMusic = false;
