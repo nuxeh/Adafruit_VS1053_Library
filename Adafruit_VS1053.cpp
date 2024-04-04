@@ -234,7 +234,7 @@ unsigned long Adafruit_VS1053_FilePlayer::mp3_ID3Jumper(File mp3) {
   return start;
 }
 
-bool Adafruit_VS1053_FilePlayer::playLoop(const char *trackname, uint32_t seek)
+bool Adafruit_VS1053_FilePlayer::playLoop(const char *trackname)
 {
   return playLoopSeek(trackname, 0);
 }
@@ -245,7 +245,7 @@ bool Adafruit_VS1053_FilePlayer::playLoopSeek(const char *trackname, uint32_t se
   return startPlayingFile(trackname, seek);
 }
 
-bool Adafruit_VS1053_FilePlayer::playOnce(const char *trackname, uint32_t seek)
+bool Adafruit_VS1053_FilePlayer::playOnce(const char *trackname)
 {
   return playOnceSeek(trackname, 0);
 }
