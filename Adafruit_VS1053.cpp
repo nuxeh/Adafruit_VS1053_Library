@@ -43,7 +43,7 @@ volatile boolean feedBufferLock = false; //!< Locks feeding the buffer
 boolean _loopPlayback; //!< internal variable, used to control playback looping
 
 #if defined(ESP8266)
-ICACHE_RAM_ATTR
+IRAM_ATTR
 #endif
 static void feeder(void) { myself->feedBuffer(); }
 
