@@ -378,10 +378,10 @@ public:
    */
   boolean playFullFile(const char *trackname);
 
-  playLoop(const char *trackname);
-  playLoopSeek(const char *trackname, uint32_t seek);
-  playOnce(const char *trackname);
-  playOnceSeek(const char *trackname, uint32_t seek);
+  bool playLoop(const char *trackname);
+  bool playLoopSeek(const char *trackname, uint32_t seek);
+  bool playOnce(const char *trackname);
+  bool playOnceSeek(const char *trackname, uint32_t seek);
   uint32_t stopPlaying(void);
 
   /*!
