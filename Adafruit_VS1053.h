@@ -424,7 +424,7 @@ public:
   void setPlaySpeed(uint16_t speed);
 
 private:
-  uint16_t getEndFillByte();
+  uint8_t getEndFillByte();
   void feedBuffer_noLock(void);
 
   uint8_t _cardCS;
