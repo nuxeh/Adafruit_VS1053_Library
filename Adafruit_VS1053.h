@@ -343,9 +343,7 @@ public:
    */
   boolean useInterrupt(uint8_t type);
 
-  File currentTrack;             //!< File that is currently playing
-
-  File* externalTrack = NULL;
+  File file; //!< File that is currently playing
 
   volatile boolean playingMusic; //!< Whether or not music is playing
   /*!

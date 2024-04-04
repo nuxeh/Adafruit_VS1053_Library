@@ -160,22 +160,22 @@ void Adafruit_VS1053_FilePlayer::stopPlaying(void) {
 
   // wrap it up!
   playingMusic = false;
-  currentTrack.close();
+  file.close();
 }
 
 void Adafruit_VS1053_FilePlayer::pausePlaying(boolean pause) {
-  playingMusic = (!pause && currentTrack);
+  playingMusic = (!pause && file);
   if (playingMusic) {
     feedBuffer();
   }
 }
 
 boolean Adafruit_VS1053_FilePlayer::paused(void) {
-  return (!playingMusic && currentTrack);
+  return (!playingMusic && file);
 }
 
 boolean Adafruit_VS1053_FilePlayer::stopped(void) {
-  return (!playingMusic && !currentTrack);
+  return (!playingMusic && !file);
 }
 
 void Adafruit_VS1053_FilePlayer::playbackLoop(boolean loopState) {
@@ -237,15 +237,15 @@ boolean Adafruit_VS1053_FilePlayer::startPlayingFile(const char *trackname) {
   sciWrite(VS1053_REG_WRAMADDR, 0x1e29);
   sciWrite(VS1053_REG_WRAM, 0);
 
-  currentTrack = SD.open(trackname);
-  if (!currentTrack) {
+  file = SD.open(trackname);
+  if (!file) {
     return false;
   }
 
   // We know we have a valid file. Check if .mp3
   // If so, check for ID3 tag and jump it if present.
   if (isMP3File(trackname)) {
-    currentTrack.seek(mp3_ID3Jumper(currentTrack));
+    file.seek(mp3_ID3Jumper(file));
   }
 
   // don't let the IRQ get triggered by accident here
@@ -296,29 +296,28 @@ void Adafruit_VS1053_FilePlayer::feedBuffer(void) {
 }
 
 void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
-  if ((!playingMusic) // paused or stopped
-      || (!currentTrack) || (!readyForData())) {
+  if ((!playingMusic) || (!file) || (!readyForData())) {
     return; // paused or stopped
   }
 
   // Feed the hungry buffer! :)
   while (readyForData()) {
     // Read some audio data from the SD card file
-    int bytesread = currentTrack.read(mp3buffer, VS1053_DATABUFFERLEN);
+    int bytesread = file.read(mp3buffer, VS1053_DATABUFFERLEN);
 
     if (bytesread == 0) {
       // must be at the end of the file
       if (_loopPlayback) {
         // play in loop
-        if (isMP3File(currentTrack.name())) {
-          currentTrack.seek(mp3_ID3Jumper(currentTrack));
+        if (isMP3File(file.name())) {
+          file.seek(mp3_ID3Jumper(file));
         } else {
-          currentTrack.seek(0);
+          file.seek(0);
         }
       } else {
         // wrap it up!
         playingMusic = false;
-        currentTrack.close();
+        file.close();
         break;
       }
     }
