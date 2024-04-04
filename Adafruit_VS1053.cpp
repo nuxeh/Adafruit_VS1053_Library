@@ -155,6 +155,10 @@ boolean Adafruit_VS1053_FilePlayer::playFullFile(const char *trackname) {
 
 uint32_t Adafruit_VS1053_FilePlayer::stopPlaying(void) {
   uint32_t ret;
+  uint8_t end_fill_byte = getEndFillByte();
+
+  Serial.print("End fill byte: ")
+  Serial.println(end_fill_byte);
 
   // cancel all playback
   sciWrite(VS1053_REG_MODE, VS1053_MODE_SM_LINE1 | VS1053_MODE_SM_SDINEW |
@@ -355,6 +359,15 @@ void Adafruit_VS1053_FilePlayer::feedBuffer_noLock(void) {
 
     playData(mp3buffer, bytesread);
   }
+}
+
+uint8_t Adafruit_VS1053_FilePlayer::getEndFillByte()
+{
+  noInterrupts();
+  sciWrite(VS1053_SCI_WRAMADDR, VS1053_PARA_ENDFILLBYTE);
+  uint8_t byte_value = sciRead(VS1053_SCI_WRAM);
+  interrupts();
+  return byte_value;
 }
 
 // get current playback speed. 0 or 1 indicates normal speed
