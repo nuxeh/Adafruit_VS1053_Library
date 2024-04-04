@@ -157,7 +157,7 @@ uint32_t Adafruit_VS1053_FilePlayer::stopPlaying(void) {
   uint32_t ret;
   uint8_t end_fill_byte = getEndFillByte();
 
-  Serial.print("End fill byte: ")
+  Serial.print("End fill byte: ");
   Serial.println(end_fill_byte);
 
   // cancel all playback
