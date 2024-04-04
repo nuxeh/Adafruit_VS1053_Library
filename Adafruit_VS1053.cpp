@@ -141,7 +141,7 @@ boolean Adafruit_VS1053_FilePlayer::begin(void) {
 }
 
 boolean Adafruit_VS1053_FilePlayer::playFullFile(const char *trackname) {
-  if (!startPlayingFile(trackname))
+  if (!startPlayingFile(trackname), 0)
     return false;
 
   while (playingMusic) {
@@ -234,7 +234,29 @@ unsigned long Adafruit_VS1053_FilePlayer::mp3_ID3Jumper(File mp3) {
   return start;
 }
 
-boolean Adafruit_VS1053_FilePlayer::startPlayingFile(const char *trackname) {
+bool Adafruit_VS1053_FilePlayer::playLoop(const char *trackname, uint32_t seek)
+{
+  playLoopSeek(trackname, 0);
+}
+
+bool Adafruit_VS1053_FilePlayer::playLoopSeek(const char *trackname, uint32_t seek)
+{
+  _loopPlayback = true;
+  startPlayingFile(trackname, seek);
+}
+
+bool Adafruit_VS1053_FilePlayer::playOnce(const char *trackname, uint32_t seek)
+{
+  playOnceSeek(trackname, 0);
+}
+
+bool Adafruit_VS1053_FilePlayer::playOnceSeek(const char *trackname, uint32_t seek)
+{
+  _loopPlayback = false;
+  startPlayingFile(trackname, seek);
+}
+
+boolean Adafruit_VS1053_FilePlayer::startPlayingFile(const char *trackname, uint32_t seek) {
   // reset playback
   sciWrite(VS1053_REG_MODE, VS1053_MODE_SM_LINE1 | VS1053_MODE_SM_SDINEW |
                                 VS1053_MODE_SM_LAYER12);
@@ -247,10 +269,14 @@ boolean Adafruit_VS1053_FilePlayer::startPlayingFile(const char *trackname) {
     return false;
   }
 
-  // We know we have a valid file. Check if .mp3
-  // If so, check for ID3 tag and jump it if present.
-  if (isMP3File(trackname)) {
-    file.seek(mp3_ID3Jumper(file));
+  if (seek == 0) {
+    // We know we have a valid file. Check if .mp3
+    // If so, check for ID3 tag and jump it if present.
+    if (isMP3File(trackname)) {
+      file.seek(mp3_ID3Jumper(file));
+    }
+  } else {
+    file.seek(seek);
   }
 
   // don't let the IRQ get triggered by accident here
