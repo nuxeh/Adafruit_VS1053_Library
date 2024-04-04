@@ -377,7 +377,7 @@ public:
    * @return Returns true when file starts playing
    */
   boolean playFullFile(const char *trackname);
-  void stopPlaying(void); //!< Stop playback
+  uint32_t stopPlaying(void); //!< Stop playback
   /*!
    * @brief If playback is paused
    * @return Returns true if playback is paused

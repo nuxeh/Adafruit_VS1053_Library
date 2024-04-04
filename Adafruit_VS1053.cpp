@@ -153,14 +153,19 @@ boolean Adafruit_VS1053_FilePlayer::playFullFile(const char *trackname) {
   return true;
 }
 
-void Adafruit_VS1053_FilePlayer::stopPlaying(void) {
+uint32_t Adafruit_VS1053_FilePlayer::stopPlaying(void) {
+  uint32_t ret;
+
   // cancel all playback
   sciWrite(VS1053_REG_MODE, VS1053_MODE_SM_LINE1 | VS1053_MODE_SM_SDINEW |
                                 VS1053_MODE_SM_CANCEL);
 
-  // wrap it up!
   playingMusic = false;
+
+  ret = file.position();
   file.close();
+
+  return ret;
 }
 
 void Adafruit_VS1053_FilePlayer::pausePlaying(boolean pause) {
