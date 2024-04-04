@@ -342,7 +342,11 @@ public:
    * @return Returs true/false for success/failure
    */
   boolean useInterrupt(uint8_t type);
+
   File currentTrack;             //!< File that is currently playing
+
+  File* externalTrack = NULL;
+
   volatile boolean playingMusic; //!< Whether or not music is playing
   /*!
    * @brief Feeds the buffer. Reads mp3 file data from the SD card and file and
