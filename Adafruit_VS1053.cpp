@@ -141,7 +141,7 @@ boolean Adafruit_VS1053_FilePlayer::begin(void) {
 }
 
 boolean Adafruit_VS1053_FilePlayer::playFullFile(const char *trackname) {
-  if (!startPlayingFile(trackname), 0)
+  if (!startPlayingFile(trackname, 0))
     return false;
 
   while (playingMusic) {

@@ -369,7 +369,7 @@ public:
    * @param *trackname File to play
    * @return Returns true when file starts playing
    */
-  boolean startPlayingFile(const char *trackname);
+  boolean startPlayingFile(const char *trackname, uint32_t seek);
   /*!
    * @brief Play the complete file. This function will not return until the
    * playback is complete
