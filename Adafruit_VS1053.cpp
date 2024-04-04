@@ -527,7 +527,7 @@ uint16_t Adafruit_VS1053::decodeTime() {
 
 void Adafruit_VS1053::softReset(void) {
   sciWrite(VS1053_REG_MODE, VS1053_MODE_SM_SDINEW | VS1053_MODE_SM_RESET);
-  delay(100);
+  //delay(100);
 }
 
 void Adafruit_VS1053::reset() {
