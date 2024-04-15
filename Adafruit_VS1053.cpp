@@ -154,6 +154,7 @@ boolean Adafruit_VS1053_FilePlayer::playFullFile(const char *trackname) {
 }
 
 uint32_t Adafruit_VS1053_FilePlayer::stopPlaying(void) {
+  Serial.println("st");
   uint32_t ret;
   //uint8_t end_fill_byte = getEndFillByte();
 
@@ -169,6 +170,7 @@ uint32_t Adafruit_VS1053_FilePlayer::stopPlaying(void) {
   ret = file.position();
   file.close();
 
+  Serial.println("/st");
   return ret;
 }
 
@@ -200,6 +202,8 @@ boolean Adafruit_VS1053_FilePlayer::isMP3File(const char *fileName) {
 }
 
 unsigned long Adafruit_VS1053_FilePlayer::mp3_ID3Jumper(File mp3) {
+
+  Serial.println("id3");
 
   char tag[4];
   uint32_t start;
@@ -235,6 +239,7 @@ unsigned long Adafruit_VS1053_FilePlayer::mp3_ID3Jumper(File mp3) {
     // Serial.println("They handed us a NULL file!");
   }
   // Serial.print("Jumper returning: "); Serial.println(start);
+  Serial.println("/id3");
   return start;
 }
 
@@ -261,6 +266,7 @@ bool Adafruit_VS1053_FilePlayer::playOnceSeek(const char *trackname, uint32_t se
 }
 
 boolean Adafruit_VS1053_FilePlayer::startPlayingFile(const char *trackname, uint32_t seek) {
+  Serial.println("stp");
   // reset playback
   sciWrite(VS1053_REG_MODE, VS1053_MODE_SM_LINE1 | VS1053_MODE_SM_SDINEW |
                                 VS1053_MODE_SM_LAYER12);
@@ -308,6 +314,7 @@ boolean Adafruit_VS1053_FilePlayer::startPlayingFile(const char *trackname, uint
   // ok going forward, we can use the IRQ
   interrupts();
 
+  Serial.println("/stp");
   return true;
 }
 
